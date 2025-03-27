@@ -11,7 +11,7 @@
   "author": "",
   "scripts": {
     "build": "webpack --config webpack.config.cjs --stats-children",
-    "release": "gh release create v\"$(jq -r '.version' package.json)\" <(cd dist && zip -r - .) --title \"\" --notes \"\""
+    "release": "(cd dist && zip -r ../dist.zip .) && gh release create v\"$(jq -r '.version' package.json)\" dist.zip --title '' --notes '' && rm -f dist.zip"
   },
   "dependencies": {
     "@altshiftab/styles": "^0.0.1",
