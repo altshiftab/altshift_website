@@ -6,6 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {SubresourceIntegrityPlugin} = require("webpack-subresource-integrity");
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 
 module.exports = {
@@ -24,12 +25,15 @@ module.exports = {
     devtool: 'source-map',
     optimization: {
         minimize: true,
-        minimizer: [new TerserPlugin({
-            terserOptions: {
-                compress: true,
-            },
-            extractComments: false,
-        })],
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    compress: true,
+                },
+                extractComments: false,
+            }),
+            new CssMinimizerPlugin(),
+        ],
         splitChunks: {
             chunks: 'all',
         },

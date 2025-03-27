@@ -1,4 +1,4 @@
-import "../styles/common.css";
+import "@altshiftab/styles/common.css";
 import "../styles/services.css";
 
 import "./custom_elements/altshift_header_www.ts";
