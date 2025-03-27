@@ -2,8 +2,7 @@
   "name": "altshift-website",
   "type": "module",
   "version": "0.2",
-  "description": "",
-  "private": true,
+  "description": "The Alt-Shift website.",
   "keywords": [
     ""
   ],
