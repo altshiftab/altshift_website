@@ -14,6 +14,8 @@ body > main {
         --image: url("/images/me.avif");
 
         > altshift-box[slot="button"] {
+            background-color: var(--altshift-main-color);
+
             &:not([selectable]) {
                 &::part(box-container) {
                     &:hover, &:focus-visible {

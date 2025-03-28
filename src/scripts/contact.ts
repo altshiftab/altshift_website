@@ -2,6 +2,7 @@ import "@altshiftab/styles/common.css";
 import "../styles/common_www.css";
 import "../styles/contact.css";
 
+import "./common.ts"
 import "./custom_elements/altshift_header_www.ts";
 import "./custom_elements/altshift_footer_www.ts";
 

@@ -44,8 +44,8 @@ export default class AboutBox extends LitElement {
                 > .text-container {
                     box-sizing: border-box;
                     aspect-ratio: 1 / 1;
-                    padding: 6rem;
-                    overflow: hidden;
+                    padding: 4rem;
+                    overflow-y: auto;
 
                     @media screen and (max-width: 1280px) {
                         padding: 2rem;
@@ -54,12 +54,11 @@ export default class AboutBox extends LitElement {
                 }
             }
         }
-
+ 
         ::slotted(altshift-box[slot="button"]) {
             border-top: var(--border-width) solid var(--border-color);
             border-right: var(--border-width) solid var(--border-color);
             height: 100%;
-
         }
     `;
 
