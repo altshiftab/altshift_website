@@ -1,13 +1,8 @@
 {
   "name": "altshift-website",
   "type": "module",
-  "version": "0.4",
+  "version": "0.5",
   "description": "The Alt-Shift website.",
-  "keywords": [
-    ""
-  ],
-  "license": "",
-  "author": "",
   "scripts": {
     "build": "webpack --config webpack.config.cjs --stats-children",
     "release": "(cd dist && zip -r ../dist.zip .) && gh release create v\"$(jq -r '.version' package.json)\" dist.zip --title '' --notes '' && rm -f dist.zip"

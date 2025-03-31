@@ -8,6 +8,10 @@ body > main {
         @media screen and (max-width: 1280px) {
             width: 100%;
         }
+
+        > altshift-button {
+            width: fit-content;
+        }
     }
 
     > #about-viktor > about-box {

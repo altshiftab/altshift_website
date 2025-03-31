@@ -82,6 +82,10 @@ class ServiceDetailsTableRow extends LitElement {
             background-color: var(--altshift-opposite-main-color);
             color: var(--altshift-opposite-text-color);
             
+            @media screen and (max-width: 1280px) {
+                border-bottom: var(--border-width) solid var(--border-color);
+            }
+ 
             > .icon-container > svg {
                 @media screen and (max-width: 1280px) {
                     transform: rotate(90deg);
@@ -99,10 +103,8 @@ class ServiceDetailsTableRow extends LitElement {
             }
         }
         
-        :host(:not(:last-of-type)) {
-            > :is(.button-container, .content-container) {
-                border-bottom: var(--border-width) solid var(--border-color);
-            }
+        :host(:not(:last-of-type)) > :is(.button-container, .content-container) {
+            border-bottom: var(--border-width) solid var(--border-color);
         }
 
         *, *::before, *::after {
@@ -185,9 +187,15 @@ class ServicesDetailsTable extends LitElement {
         super();
 
         this.addEventListener("click", event => {
-            const row = event.target;
+            let row = event.target;
             if (row === null)
                 return;
+
+            if (!(row instanceof ServiceDetailsTableRow) && row instanceof HTMLDivElement) {
+                row = (row.assignedSlot?.getRootNode() as ShadowRoot | null)?.host ?? null;
+                (row as ServiceDetailsTableRow)?.click();
+                return;
+            }
 
             for (const slottedElement of this.slotElement.assignedElements())
                 if (slottedElement !== row)
