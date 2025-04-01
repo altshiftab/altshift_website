@@ -88,4 +88,3 @@ export default class CustomerQuote extends LitElement {
         `;
     }
 }
-customElements.define('customer-quote', CustomerQuote);
