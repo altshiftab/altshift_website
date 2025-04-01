@@ -1,6 +1,5 @@
-import {css, CSSResultGroup, html, LitElement, nothing, render} from "lit";
+import {css, CSSResultGroup, html, LitElement} from "lit";
 import {customElement, property, query} from "lit/decorators.js"
-
 
 @customElement('services-details-table-row')
 class ServiceDetailsTableRow extends LitElement {
@@ -191,9 +190,9 @@ class ServicesDetailsTable extends LitElement {
             if (row === null)
                 return;
 
-            if (!(row instanceof ServiceDetailsTableRow) && row instanceof HTMLDivElement) {
+            if (!(row instanceof ServiceDetailsTableRow) && row instanceof HTMLElement) {
                 row = (row.assignedSlot?.getRootNode() as ShadowRoot | null)?.host ?? null;
-                (row as ServiceDetailsTableRow)?.click();
+                (row as ServiceDetailsTableRow | null)?.click();
                 return;
             }
 

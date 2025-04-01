@@ -1,8 +1,10 @@
 import {css, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
 import "@altshiftab/web_components/footer";
 import "@altshiftab/web_components/box";
 
+@customElement("altshift-footer-www")
 export default class AltShiftFooterWww extends LitElement {
     static styles = css`
         altshift-box {
@@ -56,5 +58,3 @@ export default class AltShiftFooterWww extends LitElement {
         `
     }
 }
-
-customElements.define('altshift-footer-www', AltShiftFooterWww);

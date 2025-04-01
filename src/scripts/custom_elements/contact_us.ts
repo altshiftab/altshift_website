@@ -1,5 +1,7 @@
 import {css, CSSResultGroup, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
+@customElement("contact-us")
 export default class ContactUs extends LitElement {
     static styles = css`
         :host {
@@ -41,4 +43,3 @@ export default class ContactUs extends LitElement {
         `;
     }
 }
-customElements.define('contact-us', ContactUs);

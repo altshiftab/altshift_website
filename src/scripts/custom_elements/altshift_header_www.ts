@@ -1,8 +1,10 @@
 import {css, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
 import "@altshiftab/web_components/header";
 import "@altshiftab/web_components/box";
 
+@customElement("altshift-header-www")
 export default class AltShiftHeaderWww extends LitElement {
     static styles = css`
         altshift-box {
@@ -49,5 +51,3 @@ export default class AltShiftHeaderWww extends LitElement {
         `;
     }
 }
-
-customElements.define('altshift-header-www', AltShiftHeaderWww);

@@ -1,5 +1,7 @@
 import {css, CSSResultGroup, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
+@customElement('services-table')
 export default class ServicesTable extends LitElement {
     static styles = css`
         :host {
@@ -103,4 +105,3 @@ export default class ServicesTable extends LitElement {
         `;
     }
 }
-customElements.define("services-table", ServicesTable);

@@ -1,5 +1,7 @@
 import {css, CSSResultGroup, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
+@customElement("customer-quote")
 export default class CustomerQuote extends LitElement {
     static styles = css`
         :host {

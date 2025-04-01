@@ -1,5 +1,7 @@
 import {css, CSSResultGroup, html, LitElement} from "lit";
+import {customElement} from "lit/decorators.js"
 
+@customElement("customer-icon-container")
 export class CustomerIconContainer extends LitElement {
     static styles = css`
         :host {
@@ -23,8 +25,8 @@ export class CustomerIconContainer extends LitElement {
         return html`<slot></slot>`;
     }
 }
-customElements.define('customer-icon-container', CustomerIconContainer);
 
+@customElement("customers-table")
 export class CustomersTable extends LitElement {
     static styles = css`
         @media screen and (max-width: 1280px) {
@@ -77,4 +79,3 @@ export class CustomersTable extends LitElement {
         `;
     }
 }
-customElements.define('customers-table', CustomersTable);
