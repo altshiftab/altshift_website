@@ -1,5 +1,7 @@
 import {css, CSSResultGroup, html, LitElement} from "lit";
-import {customElement, property, query} from "lit/decorators.js"
+import {customElement, property, query, state} from "lit/decorators.js"
+
+export const rowSelectedEventType = "row-selected";
 
 @customElement('services-details-table-row')
 class ServiceDetailsTableRow extends LitElement {
@@ -15,7 +17,7 @@ class ServiceDetailsTableRow extends LitElement {
             --border-color: var(--altshift-border-color);
             --text-color: var(--altshift-text-color);
 
-            > .button-container{
+            > .button-container {
                 all: unset;
                 display: flex;
                 justify-content: space-between;
@@ -25,6 +27,7 @@ class ServiceDetailsTableRow extends LitElement {
                 width: 100%;
                 box-sizing: border-box;
                 border-right: var(--border-width) solid var(--border-color);
+                gap: 1rem;
 
                 @media screen and (max-width: 1280px) {
                     border-right: unset;
@@ -33,7 +36,7 @@ class ServiceDetailsTableRow extends LitElement {
                 &:not(:last-of-type) {
                     border-bottom: var(--border-width) solid var(--border-color);
                 }
-                
+
                 &:focus-visible > .title-container {
                     font-weight: 900;
                 }
@@ -72,36 +75,36 @@ class ServiceDetailsTableRow extends LitElement {
                 overflow-y: auto;
             }
         }
-        
-        :host(:hover, :focus-visible) > .button-container > .title-container {
+
+        :host(:hover) > .button-container > .title-container {
             font-weight: 900;
         }
 
         :host([selected]) > .button-container {
             background-color: var(--altshift-opposite-main-color);
             color: var(--altshift-opposite-text-color);
-            
+
             @media screen and (max-width: 1280px) {
                 border-bottom: var(--border-width) solid var(--border-color);
             }
- 
+
             > .icon-container > svg {
                 @media screen and (max-width: 1280px) {
                     transform: rotate(90deg);
                 }
-                
+
                 > path {
                     fill: var(--altshift-opposite-text-color);
                 }
             }
-            
+
             & + .content-container {
                 @media screen and (max-width: 1280px) {
                     display: block;
                 }
             }
         }
-        
+
         :host(:not(:last-of-type)) > :is(.button-container, .content-container) {
             border-bottom: var(--border-width) solid var(--border-color);
         }
@@ -111,8 +114,7 @@ class ServiceDetailsTableRow extends LitElement {
             scrollbar-color: var(--altshift-text-color) var(--altshift-main-color);
             scrollbar-width: thin;
         }
-        
-        
+
         ::slotted([slot="content"]) {
             margin: 2rem 0;
             padding: 0 2rem;
@@ -123,9 +125,16 @@ class ServiceDetailsTableRow extends LitElement {
         return this.contentSlot?.assignedElements() ?? [];
     }
 
+    private _handleClick = () => {
+        this.selected = !this.selected;
+        this.dispatchEvent(
+            new CustomEvent(rowSelectedEventType, {detail: {selected: this.selected}, bubbles: true, composed: true})
+        );
+    }
+
     render() {
         return html`
-            <button class="button-container" part="button-container" @click=${() => this.selected = !this.selected}>
+            <button class="button-container" part="button-container" @click=${this._handleClick}>
                 <div class="title-container">
                     <slot name="title"></slot>
                 </div>
@@ -145,105 +154,107 @@ class ServiceDetailsTableRow extends LitElement {
 
 @customElement('services-details-table')
 class ServicesDetailsTable extends LitElement {
-    @query('slot')
+    @query("slot")
     slotElement!: HTMLSlotElement;
+
+    @state()
+    private displayedContent: Element[] = [];
+
+    private _currentSelected: ServiceDetailsTableRow | null = null;
 
     static styles = css`
         :host {
             --border-width: var(--altshift-border-width);
             --border-color: var(--altshift-border-color);
+
+            > altshift-box {
+                --offset-top: 1rem;
+                --offset-left: 1rem;
+
+                > .container {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+
+                    @media screen and (max-width: 1280px) {
+                        display: unset;
+                    }
+
+                    > .content-container {
+                        margin: 2rem 0;
+                        padding: 0 2rem;
+
+                        @media screen and (max-width: 1280px) {
+                            display: none;
+                        }
+
+                        p {
+                            font-size: 1.125rem;
+                            font-weight: 400;
+                            line-height: 2.125rem;
+                            height: 100%;
+                        }
+                    }
+                }
+            }
         }
-        
-         altshift-box {
-             --offset-top: 1rem;
-             --offset-left: 1rem;
-             
-             > .container {
-                 display: grid;
-                 grid-template-columns: 1fr 1fr;
-
-                 @media screen and (max-width: 1280px) {
-                     display: unset;
-                 }
-                 
-                 > .content-container {
-                     margin: 2rem 0;
-                     padding: 0 2rem;
-
-                     @media screen and (max-width: 1280px) {
-                         display: none;
-                     }
-                 }
-             }
-         }
 
         @media screen and (max-width: 1280px) {
             display: unset;
         }
     ` as CSSResultGroup;
 
-    constructor() {
-        super();
+    private _handleRowSelected = (event: CustomEvent) => {
+        const {selected} = event.detail;
 
-        this.addEventListener("click", event => {
-            let row = event.target;
-            if (row === null)
-                return;
+        if (selected) {
+            const row = event.target as ServiceDetailsTableRow;
 
-            if (!(row instanceof ServiceDetailsTableRow) && row instanceof HTMLElement) {
-                row = (row.assignedSlot?.getRootNode() as ShadowRoot | null)?.host ?? null;
-                (row as ServiceDetailsTableRow | null)?.click();
-                return;
-            }
+            if (row !== this._currentSelected && this._currentSelected !== null)
+                this._currentSelected?.removeAttribute("selected");
 
-            for (const slottedElement of this.slotElement.assignedElements())
-                if (slottedElement !== row)
-                    slottedElement.removeAttribute("selected");
+            this._currentSelected = row;
+            this.displayedContent = row.getSlottedContentElements();
 
-            for (const child of this.children)
-                if (child.getAttribute("slot") === "content")
-                    child.remove();
+        } else {
+            this._currentSelected = null;
+            this.displayedContent = [];
+        }
+    }
 
-            if (row instanceof ServiceDetailsTableRow) {
-                if (row.hasAttribute("selected")) {
-                    for (const element of row.getSlottedContentElements()) {
-                        this.appendChild(element.cloneNode(true));
-                    }
-                }
-            }
-        });
+    private _handleRowHover = (event: Event) => {
+        const row = event.currentTarget as ServiceDetailsTableRow;
+        if (row === null)
+            return;
 
-        this.addEventListener("mouseover", event => {
-            const target = event.target as HTMLElement;
-            if (!(target instanceof ServiceDetailsTableRow))
-                return
+        if (this._currentSelected !== null)
+            return;
 
-            if (this.slotElement.assignedElements().some(element=> element.hasAttribute("selected")))
-                return;
+        this.displayedContent = row.getSlottedContentElements();
+    }
 
-            for (const child of this.children) {
-                if (child.getAttribute("slot") === "content") {
-                    child.remove();
-                }
-            }
+    private _handleRowUnhover = (event: Event) => {
+        const row = event.currentTarget as ServiceDetailsTableRow;
+        if (row === null)
+            return;
 
-            for (const element of target.getSlottedContentElements()) {
-                this.appendChild(element.cloneNode(true));
-            }
-        });
+        if (this._currentSelected !== null)
+            return;
 
-        this.addEventListener("mouseout", event => {
-            const target = event.target as HTMLElement;
-            if (!(target instanceof ServiceDetailsTableRow))
-                return
+       this.displayedContent = [];
+    }
 
-            if (this.slotElement.assignedElements().some(element=> element.hasAttribute("selected")))
-                return;
+    private _handleSlotChange= (event: Event) => {
+        const slot = event.target as HTMLSlotElement | null;
+        if (slot === null)
+            return;
 
-            for (const child of this.children) {
-                if (child.getAttribute("slot") === "content") {
-                    child.remove();
-                }
+        const elements = slot.assignedElements();
+
+        elements.forEach(element => {
+            if (element instanceof ServiceDetailsTableRow) {
+                element.addEventListener(rowSelectedEventType, this._handleRowSelected);
+                element.addEventListener("mouseover", this._handleRowHover);
+                element.addEventListener("mouseout", this._handleRowUnhover);
             }
         });
     }
@@ -253,13 +264,19 @@ class ServicesDetailsTable extends LitElement {
             <altshift-box>
                 <div class="container">
                     <div class="rows-container">
-                        <slot name="row"></slot>
+                        <slot name="row" @slotchange=${this._handleSlotChange}></slot>
                     </div>
                     <div class="content-container">
-                        <slot name="content"></slot>
+                        ${this.displayedContent.map(element => html`${element.cloneNode(true)}`)}
                     </div>
                 </div>
             </altshift-box>
         `;
+    }
+}
+
+declare global {
+    interface HTMLElementEventMap {
+        [rowSelectedEventType]: CustomEvent;
     }
 }

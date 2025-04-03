@@ -9,7 +9,7 @@ export default class AltShiftFooterWww extends LitElement {
     static styles = css`
         altshift-box {
             border-left: var(--altshift-border-width) solid var(--altshift-border-color);
-            
+
             > * {
                 display: flex;
                 align-items: center;
@@ -18,7 +18,6 @@ export default class AltShiftFooterWww extends LitElement {
                 padding: 0 2rem;
             }
         }
-
 
         altshift-footer svg {
             width: 2rem;

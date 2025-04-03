@@ -7,12 +7,12 @@ export default class AboutBox extends LitElement {
         altshift-box {
             --offset-top: 1rem;
             --offset-left: 1.25rem;
-            
+
             > .container {
                 width: 100%;
                 aspect-ratio: 2;
                 display: flex;
-                
+
                 @media screen and (max-width: 1280px) {
                     display: block;
                 }
@@ -54,7 +54,7 @@ export default class AboutBox extends LitElement {
                 }
             }
         }
- 
+
         ::slotted(altshift-box[slot="button"]) {
             border-top: var(--border-width) solid var(--border-color);
             border-right: var(--border-width) solid var(--border-color);

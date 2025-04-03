@@ -38,7 +38,7 @@ export class CustomersTable extends LitElement {
                 border-bottom: unset;
             }
         }
-        
+
         @media not screen and (max-width: 1280px) {
             ::slotted(*) {
                 border-bottom: var(--border-width) solid var(--border-color);
@@ -52,11 +52,11 @@ export class CustomersTable extends LitElement {
                 border-bottom: unset;
             }
         }
-        
+
         altshift-box {
             --offset-top: 1rem;
             --offset-left: 1.25rem;
-            
+
             > .container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;

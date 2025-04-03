@@ -9,8 +9,8 @@ export default class AltShiftHeaderWww extends LitElement {
     static styles = css`
         altshift-box {
             border-left: var(--altshift-border-width) solid var(--altshift-border-color);
-            
-            > * {
+
+            > a {
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -31,7 +31,7 @@ export default class AltShiftHeaderWww extends LitElement {
                     border-bottom: var(--altshift-border-width) solid var(--altshift-border-color);
                 }
 
-                > * {
+                > a {
                     padding: 2rem;
                     height: auto;
                     background-color: var(--altshift-main-color);

@@ -28,7 +28,7 @@ export default class ServicesTable extends LitElement {
                 border-right: unset;
                 border-bottom: unset;
             }
-            
+
             > .container {
                 display: grid;
                 grid-template-columns: 1fr 1fr;

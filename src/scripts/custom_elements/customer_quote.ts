@@ -9,7 +9,7 @@ export default class CustomerQuote extends LitElement {
             --offset-left: 1.25rem;
             --icon-container-height: 5rem;
         }
-        
+
         altshift-box {
             --offset-top: 1rem;
             --offset-left: 1.25rem;
@@ -21,7 +21,7 @@ export default class CustomerQuote extends LitElement {
                 border-left: unset;
                 border-bottom: unset;
             }
-            
+
             > .container {
                 display: grid;
                 grid-template-rows: 1fr 1fr;
@@ -56,7 +56,7 @@ export default class CustomerQuote extends LitElement {
                 }
             }
         }
-        
+
         .quote-scroll-hider {
             width: 100%;
 
