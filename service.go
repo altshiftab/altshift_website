@@ -38,10 +38,11 @@ func makeMux() (*motmedelMux.Mux, error) {
 	}
 
 	if err := altshiftGcpUtilsHttp.PatchErrorReporting(mux, baseUrl); err != nil {
-		return nil, motmedelErrors.New(
-			fmt.Errorf("patch error reporting: %w", err),
-			mux, baseUrl,
-		)
+		return nil, motmedelErrors.New(fmt.Errorf("patch error reporting: %w", err), mux, baseUrl)
+	}
+
+	if err := altshiftGcpUtilsHttp.PatchStrictTransportSecurity(mux); err != nil {
+		return nil, motmedelErrors.New(fmt.Errorf("patch strict transport security: %w", err), mux)
 	}
 
 	altshiftGcpUtilsHttp.PatchSecurityTxt(
