@@ -80,8 +80,8 @@ func main() {
 
 	vhostMux := &motmedelMux.VhostMux{
 		HostToSpecification: map[string]*motmedelMux.VhostMuxSpecification{
-			"www.alt-shift.se": {Mux: mux},
-			"alt-shift.se":     {RedirectTo: "https://www.alt-shift.se"},
+			"www.altshift.se": {Mux: mux},
+			"altshift.se":     {RedirectTo: "https://www.altshift.se"},
 		},
 	}
 
