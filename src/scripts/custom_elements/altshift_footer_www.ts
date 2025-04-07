@@ -7,22 +7,30 @@ import "@altshiftab/web_components/box";
 @customElement("altshift-footer-www")
 export default class AltShiftFooterWww extends LitElement {
     static styles = css`
-        altshift-box {
-            border-left: var(--altshift-border-width) solid var(--altshift-border-color);
+        :host {
+            > altshift-footer {
+                &[compact] > .first-row {
+                    display: none;
+                }
 
-            > * {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 100%;
-                padding: 0 2rem;
-            }
-        }
+                > altshift-box {
+                    border-left: var(--altshift-border-width) solid var(--altshift-border-color);
 
-        altshift-footer svg {
-            width: 2rem;
-            path {
-                fill: var(--altshift-text-color);
+                    > a {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100%;
+                        padding: 0 2rem;
+
+                        > svg {
+                            width: 2rem;
+                            path {
+                                fill: var(--altshift-text-color);
+                            }
+                        }
+                    }
+                }
             }
         }
     `;
