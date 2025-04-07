@@ -15,6 +15,8 @@ export default class AltShiftHeaderWww extends LitElement {
                 align-items: center;
                 justify-content: center;
                 height: 100%;
+                width: auto;
+
                 padding: 0 2rem;
             }
         }
