@@ -49,7 +49,7 @@ func makeMux() (*motmedelMux.Mux, error) {
 		mux,
 		[]byte(
 			fmt.Sprintf(
-				"Contact: mailto:security@altshift.se\nExpires: %s\n",
+				"Contact: mailto:security@altshift.se\nPreferred-Languages: sv, en\nCanonical: https://www.altshift.se/.well-known/security.txt\nExpires: %s\n",
 				time.Now().UTC().AddDate(1, 0, 0).Format("2006-01-02T15:04:05.000Z"),
 			),
 		),
@@ -85,6 +85,7 @@ func main() {
 			"altshift.se":     {RedirectTo: "https://www.altshift.se"},
 		},
 	}
+	vhostMux.DefaultHeaders = mux.DefaultHeaders
 
 	httpServer := &http.Server{Addr: fmt.Sprintf(":%s", port), Handler: h2c.NewHandler(vhostMux, &http2.Server{})}
 	if err := httpServer.ListenAndServe(); err != nil {
