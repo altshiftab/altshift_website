@@ -15,7 +15,7 @@ body > main {
     }
 
     > #about-viktor > about-box {
-        --image: url("/images/me.avif");
+        --image: url("../images/me.avif");
 
         > altshift-box[slot="button"] {
             background-color: var(--altshift-main-color);

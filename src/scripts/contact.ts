@@ -1,10 +1,12 @@
 import "@altshiftab/styles/common.css";
+import {addErrorEventListeners} from "@altshiftab/http_service_utils_js";
+
 import "../styles/common_www.css";
 import "../styles/contact.css";
-
-import "./common.ts"
 import "./custom_elements/altshift_header_www.ts";
 import "./custom_elements/altshift_footer_www.ts";
+
+addErrorEventListeners();
 
 document.addEventListener("DOMContentLoaded", () => {
     ["mouseover", "click"].forEach(listener_type => {
