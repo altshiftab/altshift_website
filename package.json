@@ -1,19 +1,19 @@
 {
   "name": "altshift-website",
   "type": "module",
-  "version": "0.13",
+  "version": "0.14",
   "description": "The Alt-Shift website.",
   "scripts": {
     "build": "webpack --config webpack.config.mjs --stats-children",
     "release": "npm run build && (cd dist && zip -r ../dist.zip .) && gh release create v\"$(jq -r '.version' package.json)\" dist.zip --title '' --notes '' && rm -f dist.zip"
   },
   "dependencies": {
-    "@altshiftab/styles": "^0.0.1",
     "@altshiftab/web_components": "^0.0.54",
     "lit": "^3.2.1"
   },
   "devDependencies": {
     "@altshiftab/http_service_utils_js": "^0.0.1",
+    "@altshiftab/styles": "^0.0.2",
     "@altshiftab/webpack_configuration": "^0.0.7",
     "webpack-cli": "^5.1.4"
   }
