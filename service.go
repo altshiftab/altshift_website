@@ -72,10 +72,13 @@ func main() {
 	mux.ProblemDetailConverter = response_error.ProblemDetailConverterFunction(
 		func(detail *problem_detail.ProblemDetail, negotiation *motmedelHttpTypes.ContentNegotiation) ([]byte, string, error) {
 			data, contentType, err := response_error.ConvertProblemDetail(detail, negotiation)
+			if err != nil {
+				return nil, "", fmt.Errorf("convert problem detail: %w", err)
+			}
 			if contentType == "application/problem+xml" {
 				contentType = "application/xml"
 			}
-			return data, contentType, err
+			return data, contentType, nil
 		},
 	)
 
