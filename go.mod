@@ -6,9 +6,9 @@ toolchain go1.24.1
 
 require (
 	github.com/Motmedel/utils_go v0.0.205
-	github.com/Motmedel/utils_go/pkg/http/mux v0.0.70
+	github.com/Motmedel/utils_go/pkg/http/mux v0.0.72
 	github.com/Motmedel/utils_go/pkg/http/problem_detail v1.0.4
-	github.com/altshiftab/gcp_utils/pkg/http v0.0.12
+	github.com/altshiftab/gcp_utils/pkg/http v0.0.13
 	github.com/altshiftab/gcp_utils/pkg/log v0.0.9
 	golang.org/x/net v0.40.0
 )

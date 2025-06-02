@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	motmedelEnv "github.com/Motmedel/utils_go/pkg/env"
 	motmedelErrors "github.com/Motmedel/utils_go/pkg/errors"
@@ -27,6 +28,18 @@ func makeMux() (*motmedelMux.Mux, error) {
 	}
 
 	mux := altshiftGcpUtilsHttp.MakeMux(staticContentEndpointSpecifications, nil)
+
+	defaultDocumentHeaders := mux.DefaultDocumentHeaders
+	if defaultDocumentHeaders == nil {
+		return nil, motmedelErrors.NewWithTrace(errors.New("nil default document headers"))
+	}
+
+	contentSecurityPolicy := defaultDocumentHeaders["Content-Security-Policy"]
+	if contentSecurityPolicy != "" {
+		contentSecurityPolicy += "; "
+	}
+	contentSecurityPolicy += "require-trusted-types-for 'script'; trusted-types lit-html"
+	defaultDocumentHeaders["Content-Security-Policy"] = contentSecurityPolicy
 
 	documentEndpointSpecifications := mux.GetDocumentEndpointSpecifications()
 
@@ -68,6 +81,9 @@ func main() {
 	if err != nil {
 		logger.FatalWithExitingMessage("An error occurred when making the mux.", fmt.Errorf("make mux: %w", err))
 	}
+	if mux == nil {
+		logger.FatalWithExitingMessage("Nil mux", nil)
+	}
 
 	mux.ProblemDetailConverter = response_error.ProblemDetailConverterFunction(
 		func(detail *problem_detail.ProblemDetail, negotiation *motmedelHttpTypes.ContentNegotiation) ([]byte, string, error) {
@@ -90,7 +106,11 @@ func main() {
 	}
 	vhostMux.DefaultHeaders = mux.DefaultHeaders
 
-	httpServer := &http.Server{Addr: fmt.Sprintf(":%s", port), Handler: h2c.NewHandler(vhostMux, &http2.Server{})}
+	httpServer := &http.Server{
+		Addr:              fmt.Sprintf(":%s", port),
+		Handler:           h2c.NewHandler(vhostMux, &http2.Server{}),
+		ReadHeaderTimeout: 5 * time.Second,
+	}
 	if err := httpServer.ListenAndServe(); err != nil {
 		logger.FatalWithExitingMessage(
 			"An error occurred when listening and serving.",
