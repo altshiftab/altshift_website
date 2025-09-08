@@ -65,6 +65,10 @@ html {
                                     gap: unset;
                                     justify-content: space-around;
                                 }
+
+                                > altshift-button {
+                                    width: fit-content;
+                                }
                             }
                         }
                     }
