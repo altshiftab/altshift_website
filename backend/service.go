@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"log/slog"
+
 	motmedelEnv "github.com/Motmedel/utils_go/pkg/env"
 	motmedelErrors "github.com/Motmedel/utils_go/pkg/errors"
 	altshiftGcpUtilsHttp "github.com/altshiftab/gcp_utils/pkg/http"
 	altshiftGcpUtilsLog "github.com/altshiftab/gcp_utils/pkg/log"
-	"log/slog"
 )
 
 func main() {
@@ -18,7 +19,7 @@ func main() {
 		"www.altshift.se",
 		motmedelEnv.GetEnvWithDefault("PORT", "8080"),
 		staticContentEndpointSpecifications,
-		[2]string{"altshift.se", "https://www.altshift.se"},
+		[2]string{"altshift.se", "https://www.altshift.se/"},
 	)
 	if err != nil {
 		logger.FatalWithExitingMessage("An error occurred when making the mux.", fmt.Errorf("make mux: %w", err))
