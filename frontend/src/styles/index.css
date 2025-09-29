@@ -1,6 +1,4 @@
 html {
-    /* NOTE: Workaround until the CSS pseudo-class `:host-context()` is widely supported, if ever. */
-
     &:not(.dark-theme) {
         contact-us {
             &::part(text) {
@@ -26,129 +24,32 @@ html {
     }
 
     > body {
-        gap: 0;
+        gap: 5rem;
 
         > main {
-            width: 100%;
-
-            > article {
-                width: var(--main-width);
-                margin: auto;
-                @media screen and (max-width: 1280px) {
-                    min-height: unset;
-                }
-
-                &#introduction {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5rem;
-
-                    > .info-section {
-                        width: var(--main-width);
-                        margin: auto;
-
-                        > .info-section-text-container {
-                            width: 50%;
-
-                            @media screen and (max-width: 1280px) {
-                                width: unset;
-                            }
-
-                            > .info-button-container {
-                                padding-top: 2rem;
-                                display: flex;
-                                gap: 4rem;
-
-                                @media screen and (max-width: 1280px) {
-                                    padding-top: 4rem;
-                                    gap: unset;
-                                    justify-content: space-around;
-                                }
-
-                                > altshift-button {
-                                    width: fit-content;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                &#our-services {
-                    > .tables-section {
-                        display: flex;
-                        flex-direction: column;
-
-                        > .services-table-container {
-                            display: flex;
-                            flex-direction: column;
-                            flex: 1;
-                            gap: 2rem;
-
-                            > .service-table-container {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 1rem;
-
-
-                            }
-                        }
-                    }
-                }
-
-                &#our-customers {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4rem;
-
-                    .quote-container {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 4rem;
-
-                        @media screen and (max-width: 1280px) {
-                            grid-template-columns: 1fr;
-                            gap: 2rem;
-                        }
-
-                        > customer-quote {
-                            > figure {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 1rem;
-                                margin: 0;
-
-                                @media screen and (max-width: 1280px) {
-                                    max-height: 12rem;
-                                    overflow-y: auto;
-                                }
-
-                                > blockquote {
-                                    margin: 0;
-                                    font-weight: 400;
-                                    font-size: 1.125rem;
-                                    line-height: 2.125rem;
-
-                                    @media screen and (max-width: 1280px) {
-                                        font-size: 1rem;
-                                        line-height: calc((1/1.125) * 2.125rem);
-                                    }
-                                }
-                                > figcaption {
-                                    font-weight: 700;
-                                    font-size: 1.125rem;
-                                    line-height: 2.125rem;
-
-                                    @media screen and (max-width: 1280px) {
-                                        font-size: 1rem;
-                                        line-height: unset;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 5rem;
         }
+
+        > footer > altshift-footer-www {
+            display: block;
+            width: var(--header-footer-width);
+            margin: 4rem auto 0 auto;
+        }
+    }
+
+    > header > altshift-header-www {
+        display: block;
+        width: var(--header-footer-width);
+        margin-left: auto;
+        margin-right: auto;
+        background-color: var(--altshift-main-color);
+    }
+
+    p {
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 2.125rem;
     }
 }
