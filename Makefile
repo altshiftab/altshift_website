@@ -26,7 +26,7 @@ backend-publish-build:
 	@echo "[backend] Building for publish..."
 	cd backend && podman build . --tag altshift-website
 
-backend-publish: backend-publish-build
+backend-publish: build backend-publish-build
 	@echo "[backend] Publishing..."
 	podman tag altshift-website europe-west1-docker.pkg.dev/altshift-main/docker-images/altshift-website:latest \
 		&& podman push europe-west1-docker.pkg.dev/altshift-main/docker-images/altshift-website:latest
