@@ -1,35 +1,39 @@
-import {css, html, LitElement} from "lit";
+import {css, CSSResultGroup, html, LitElement} from "lit";
 import {customElement} from "lit/decorators.js"
+import {textStyles} from "../common";
 
 @customElement("content-contact")
-class ContentContact extends LitElement {
-    static styles = css`
-        :host {
-            > .text-section {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
+export default class ContentContact extends LitElement {
+    static styles = [
+        textStyles,
+        css`
+            :host {
+                > .text-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
 
-                @media screen and (max-width: 1280px) {
-                    width: 100%;
+                    @media screen and (max-width: 1280px) {
+                        width: 100%;
+                    }
                 }
-            }
 
-            > .button-section {
-                display: flex;
-                gap: 2rem;
-
-                @media screen and (max-width: 1280px) {
+                > .button-section {
+                    display: flex;
                     gap: 2rem;
-                }
 
-                > a > svg {
-                    fill: var(--altshift-text-color);
-                    height: 2.6875rem;
+                    @media screen and (max-width: 1280px) {
+                        gap: 2rem;
+                    }
+
+                    > a > svg {
+                        fill: var(--altshift-text-color);
+                        height: 2.6875rem;
+                    }
                 }
             }
-        }
-    `;
+        `
+    ] as CSSResultGroup;
 
     render() {
         return html`

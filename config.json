@@ -1,0 +1,9 @@
+{
+    "routes": {
+        "about": "/about",
+        "contact": "/contact",
+        "services": "/services"
+    },
+    "litHtmlTrustedTypesPolicy": "lit-html",
+    "webpackTrustedTypesPolicy": "webpack"
+}

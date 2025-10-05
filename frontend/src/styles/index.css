@@ -1,35 +1,63 @@
 html {
-    &:not(.dark-theme) {
-        contact-us {
-            &::part(text) {
-                color: var(--text-color);
-            }
+    &.light {
+        --contact-us-color: var(--altshift-text-color);
 
-            &::part(icon-path) {
-                fill: var(--text-color);
-            }
-        }
+        --service-details-table-row-selected-color: var(--altshift-opposite-text-color);
+        --service-details-table-row-selected-background-color: var(--altshift-opposite-main-color);
     }
 
-    &.dark-theme {
-        contact-us {
-            &::part(text) {
-                color: var(--altshift-orange);
-            }
+    &.dark {
+        --contact-us-color: var(--altshift-orange);
 
-            &::part(icon-path) {
-                fill: var(--altshift-orange);
-            }
+        --service-details-table-row-selected-color: var(--altshift-orange);
+        --service-details-table-row-selected-background-color: var(--altshift-main-color);
+    }
+
+    &:not(.dark):not(.light) {
+        @media (prefers-color-scheme: light) {
+            --contact-us-color: var(--altshift-text-color);
+
+            --service-details-table-row-selected-color: var(--altshift-opposite-text-color);
+            --service-details-table-row-selected-background-color: var(--altshift-opposite-main-color);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            --contact-us-color: var(--altshift-orange);
+
+            --service-details-table-row-selected-color: var(--altshift-orange);
+            --service-details-table-row-selected-background-color: var(--altshift-main-color);
         }
     }
 
     > body {
         gap: 5rem;
 
+        &:has(> main:empty) {
+            display: none;
+        }
+
+        > header {
+            width: var(--header-footer-width);
+            margin-left: auto;
+            margin-right: auto;
+
+            > .theme-toggler-container {
+                position: relative;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                padding-top: 1rem;
+            }
+        }
+
         > main {
             display: flex;
             flex-direction: column;
             gap: 5rem;
+
+            > * {
+                display: contents;
+            }
         }
 
         > footer > altshift-footer-www {
@@ -37,19 +65,5 @@ html {
             width: var(--header-footer-width);
             margin: 4rem auto 0 auto;
         }
-    }
-
-    > header > altshift-header-www {
-        display: block;
-        width: var(--header-footer-width);
-        margin-left: auto;
-        margin-right: auto;
-        background-color: var(--altshift-main-color);
-    }
-
-    p {
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 2.125rem;
     }
 }

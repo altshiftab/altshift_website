@@ -4,6 +4,9 @@ import {customElement} from "lit/decorators.js"
 import "@altshiftab/web_components/box";
 import "@altshiftab/web_components/button";
 
+import {textStyles} from "../common";
+import config from "../../../../config.json";
+
 @customElement("services-table")
 class ServicesTable extends LitElement {
     static styles = css`
@@ -311,7 +314,7 @@ class ContactUs extends LitElement {
 
     render() {
         return html`
-            <a part="text" href="/contact">Contact us</a>
+            <a part="text" href="${config.routes.contact}">Contact us</a>
             <svg class="icon" viewBox="0 0 32 23">
                 <path part="icon-path" d="M31.0404 12.373C31.615 11.7985 31.615 10.8669 31.0404 10.2924L21.6773 0.929254C21.1028 0.354687 20.1712 0.354687 19.5966 0.929254C19.0221 1.50382 19.0221 2.43538 19.5966 3.00994L27.9194 11.3327L19.5966 19.6555C19.0221 20.23 19.0221 21.1616 19.5966 21.7362C20.1712 22.3107 21.1028 22.3107 21.6773 21.7362L31.0404 12.373ZM0.314453 12.804H30.0001V9.86143H0.314453V12.804Z"/>
             </svg>
@@ -320,122 +323,128 @@ class ContactUs extends LitElement {
 }
 
 @customElement("content-root")
-class ContentRoot extends LitElement {
-    static styles = css`
-        :host {
-            width: 100%;
+export default class ContentRoot extends LitElement {
+    static styles = [
+        textStyles,
+        css`
+            :host {
+                width: 100%;
 
-            > article {
-                width: var(--main-width);
-                margin: auto;
-                @media screen and (max-width: 1280px) {
-                    min-height: unset;
-                }
-
-                &#introduction {
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 5rem;
-
-                    > .info-section {
-                        width: var(--main-width);
-                        margin: auto;
-
-                        > .info-section-text-container {
-                            width: 50%;
-
-                            @media screen and (max-width: 1280px) {
-                                width: unset;
-                            }
-
-                            > .info-button-container {
-                                padding-top: 2rem;
-                                display: flex;
-                                gap: 4rem;
-
-                                @media screen and (max-width: 1280px) {
-                                    padding-top: 4rem;
-                                    gap: unset;
-                                    justify-content: space-around;
-                                }
-
-                                > altshift-button {
-                                    width: fit-content;
-                                }
-                            }
-                        }
+                > article {
+                    @media screen and (max-width: 1280px) {
+                        min-height: unset;
                     }
-                }
 
-                &#our-services {
-                    > .tables-section {
+                    &#introduction {
+                        width: 100%;
                         display: flex;
                         flex-direction: column;
+                        gap: 5rem;
 
-                        > .services-table-container {
-                            display: flex;
-                            flex-direction: column;
-                            flex: 1;
-                            gap: 2rem;
+                        > .info-section {
+                            > .info-section-text-container {
+                                width: 50%;
 
-                            > .service-table-container {
-                                display: flex;
-                                flex-direction: column;
-                                gap: 1rem;
+                                @media screen and (max-width: 1280px) {
+                                    width: unset;
+                                }
 
+                                > .info-button-container {
+                                    padding-top: 2rem;
+                                    display: flex;
+                                    gap: 4rem;
 
+                                    @media screen and (max-width: 1280px) {
+                                        padding-top: 4rem;
+                                        gap: unset;
+                                        justify-content: space-around;
+                                    }
+
+                                    > altshift-button {
+                                        width: fit-content;
+                                    }
+                                }
                             }
                         }
                     }
-                }
 
-                &#our-customers {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4rem;
+                    &#our-services {
+                        > .tables-section {
+                            display: flex;
+                            flex-direction: column;
 
-                    .quote-container {
-                        display: grid;
-                        grid-template-columns: 1fr 1fr;
-                        gap: 4rem;
-
-                        @media screen and (max-width: 1280px) {
-                            grid-template-columns: 1fr;
-                            gap: 2rem;
-                        }
-
-                        > customer-quote {
-                            > figure {
+                            > .services-table-container {
                                 display: flex;
                                 flex-direction: column;
-                                gap: 1rem;
-                                margin: 0;
+                                flex: 1;
+                                gap: 2rem;
 
-                                @media screen and (max-width: 1280px) {
-                                    max-height: 12rem;
-                                    overflow-y: auto;
-                                }
+                                > .service-table-container {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 1rem;
+                                    
+                                    > contact-us {
+                                        &::part(text) {
+                                            color: var(--contact-us-color);
+                                        }
 
-                                > blockquote {
-                                    margin: 0;
-                                    font-weight: 400;
-                                    font-size: 1.125rem;
-                                    line-height: 2.125rem;
-
-                                    @media screen and (max-width: 1280px) {
-                                        font-size: 1rem;
-                                        line-height: calc((1/1.125) * 2.125rem);
+                                        &::part(icon-path) {
+                                            fill: var(--contact-us-color);
+                                        }
                                     }
                                 }
-                                > figcaption {
-                                    font-weight: 700;
-                                    font-size: 1.125rem;
-                                    line-height: 2.125rem;
+                            }
+                        }
+                    }
+
+                    &#our-customers {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4rem;
+
+                        .quote-container {
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 4rem;
+
+                            @media screen and (max-width: 1280px) {
+                                grid-template-columns: 1fr;
+                                gap: 2rem;
+                            }
+
+                            > customer-quote {
+                                > figure {
+                                    display: flex;
+                                    flex-direction: column;
+                                    gap: 1rem;
+                                    margin: 0;
 
                                     @media screen and (max-width: 1280px) {
-                                        font-size: 1rem;
-                                        line-height: unset;
+                                        max-height: 12rem;
+                                        overflow-y: auto;
+                                    }
+
+                                    > blockquote {
+                                        margin: 0;
+                                        font-weight: 400;
+                                        font-size: 1.125rem;
+                                        line-height: 2.125rem;
+
+                                        @media screen and (max-width: 1280px) {
+                                            font-size: 1rem;
+                                            line-height: calc((1/1.125) * 2.125rem);
+                                        }
+                                    }
+                                    > figcaption {
+                                        font-weight: 700;
+                                        font-size: 1.125rem;
+                                        line-height: 2.125rem;
+
+                                        @media screen and (max-width: 1280px) {
+                                            font-size: 1rem;
+                                            line-height: unset;
+                                        }
                                     }
                                 }
                             }
@@ -443,8 +452,8 @@ class ContentRoot extends LitElement {
                     }
                 }
             }
-        }
-    `;
+        `
+    ] as CSSResultGroup;
 
     render() {
         return html`
@@ -457,8 +466,8 @@ class ContentRoot extends LitElement {
                         <p>From experience with a variety of customers, we know what solutions work and how they can be used to effectively detect threats and prevent them from having an impact on your business.</p>
 
                         <div class="info-button-container">
-                            <altshift-button animated selectable textBox><a href="/services">Show services</a></altshift-button>
-                            <altshift-button animated selectable textBox><a href="/contact">Contact us</a></altshift-button>
+                            <altshift-button animated selectable textBox><a href="${config.routes.services}">Show services</a></altshift-button>
+                            <altshift-button animated selectable textBox><a href="${config.routes.contact}">Contact us</a></altshift-button>
                         </div>
                     </div>
                 </section>

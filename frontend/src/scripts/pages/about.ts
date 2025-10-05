@@ -1,8 +1,12 @@
-import {css, html, LitElement} from "lit";
+import {css, unsafeCSS, CSSResultGroup, html, LitElement} from "lit";
 import {customElement} from "lit/decorators.js"
 
 import "@altshiftab/web_components/box";
 import "@altshiftab/web_components/button";
+
+import {textStyles} from "../common";
+import meImage from "../../images/me.avif"
+import config from "../../../../config.json";
 
 @customElement("about-box")
 class AboutBox extends LitElement {
@@ -61,7 +65,6 @@ class AboutBox extends LitElement {
         ::slotted(altshift-box[slot="button"]) {
             border-top: var(--border-width) solid var(--border-color);
             border-right: var(--border-width) solid var(--border-color);
-            height: 100%;
         }
     `;
 
@@ -82,59 +85,62 @@ class AboutBox extends LitElement {
 }
 
 @customElement("content-about")
-class ContentAbout extends LitElement {
-    static styles = css`
-        :host {
-            > .text-section {
-                display: flex;
-                flex-direction: column;
-                gap: 1rem;
-                width: 50%;
+export default class ContentAbout extends LitElement {
+    static styles = [
+        textStyles,
+        css`
+            :host {
+                > .text-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    width: 50%;
 
-                @media screen and (max-width: 1280px) {
-                    width: 100%;
+                    @media screen and (max-width: 1280px) {
+                        width: 100%;
+                    }
+
+                    > altshift-button {
+                        width: fit-content;
+                    }
                 }
 
-                > altshift-button {
-                    width: fit-content;
-                }
-            }
+                > #about-viktor > about-box {
+                    --image: url(${unsafeCSS(meImage)});
 
-            > #about-viktor > about-box {
-                --image: url("../images/me.avif");
+                    > altshift-box[slot="button"] {
+                        background-color: var(--altshift-main-color);
 
-                > altshift-box[slot="button"] {
-                    background-color: var(--altshift-main-color);
+                        &:not([selectable]) {
+                            &::part(box-container) {
+                                &:hover, &:focus-visible {
+                                    color: var(--altshift-opposite-text-color);
+                                }
 
-                    &:not([selectable]) {
-                        &::part(box-container) {
-                            &:hover, &:focus-visible {
-                                color: var(--altshift-opposite-text-color);
+                                @media screen and (max-width: 1280px) {
+                                    padding: 0.5rem 1.2rem;
+                                    font-size: 0.675rem;
+                                }
                             }
 
+                            &:hover, &:focus-visible {
+                                background-color: var(--altshift-opposite-main-color);
+                                --text-color: var(--altshift-opposite-text-color);
+                            }
+                        }
+
+                        > * {
+                            display: block;
                             @media screen and (max-width: 1280px) {
                                 padding: 0.5rem 1.2rem;
                                 font-size: 0.675rem;
                             }
                         }
-
-                        &:hover, &:focus-visible {
-                            background-color: var(--altshift-opposite-main-color);
-                            --text-color: var(--altshift-opposite-text-color);
-                        }
-                    }
-
-                    > * {
-                        display: block;
-                        @media screen and (max-width: 1280px) {
-                            padding: 0.5rem 1.2rem;
-                            font-size: 0.675rem;
-                        }
                     }
                 }
             }
-        }
-    `;
+        `
+    ] as CSSResultGroup;
 
     render() {
         return html`
@@ -147,7 +153,7 @@ class ContentAbout extends LitElement {
                     <p>Alt-Shift was founded in Stockholm, Sweden in 2022 by Viktor Persson.</p>
                 </div>
                 <altshift-button>
-                    <a href="/contact">Contact us</a>
+                    <a href="${config.routes.contact}">Contact us</a>
                 </altshift-button>
             </section>
 

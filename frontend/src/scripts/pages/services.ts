@@ -3,6 +3,8 @@ import {customElement, property, query, state} from "lit/decorators.js";
 
 import "@altshiftab/web_components/box";
 
+import {textStyles} from "../common";
+
 export const rowSelectedEventType = "row-selected";
 
 @customElement("services-details-table-row")
@@ -284,85 +286,81 @@ declare global {
 }
 
 @customElement("content-services")
-class ContentServices extends LitElement {
-    static styles = css`
-        :host {
-            > section > altshift-box {
-                --offset-top: 1rem;
-                --offset-left: 1.25rem;
-            }
-
-            > .summary-table-section > altshift-box > .summary-table {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                width: 100%;
-
-                @media screen and (max-width: 1280px) {
-                    grid-template-columns: 1fr;
-                    border-left: none;
+export default class ContentServices extends LitElement {
+    static styles = [
+        textStyles,
+        css`
+            :host {
+                > section > altshift-box {
+                    --offset-top: 1rem;
+                    --offset-left: 1.25rem;
                 }
 
-                > article {
-                    padding: 4rem;
-
-                    @media not screen and (max-width: 1280px) {
-                        &:nth-of-type(n + 2) {
-                            border-left: var(--border-width) solid var(--border-color);
-                        }
-                    }
+                > .summary-table-section > altshift-box > .summary-table {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    width: 100%;
 
                     @media screen and (max-width: 1280px) {
-                        border-left: unset;
-                        border-bottom: var(--border-width) solid var(--border-color);
-                        padding: 2rem;
+                        grid-template-columns: 1fr;
+                        border-left: none;
+                    }
 
-                        &:last-of-type {
-                            border-bottom: unset;
+                    > article {
+                        padding: 4rem;
+
+                        @media not screen and (max-width: 1280px) {
+                            &:nth-of-type(n + 2) {
+                                border-left: var(--border-width) solid var(--border-color);
+                            }
+                        }
+
+                        @media screen and (max-width: 1280px) {
+                            border-left: unset;
+                            border-bottom: var(--border-width) solid var(--border-color);
+                            padding: 2rem;
+
+                            &:last-of-type {
+                                border-bottom: unset;
+                            }
+                        }
+
+                        > .title {
+                            margin: 0;
+                            font-size: 1.875rem;
+                            font-weight: 900;
+                            line-height: 2.375rem;
+                        }
+
+                        > details > summary {
+                            cursor: pointer;
+                            font-weight: 700;
+                            user-select: none;
                         }
                     }
+                }
 
-                    > .title {
-                        margin: 0;
-                        font-size: 1.875rem;
-                        font-weight: 900;
-                        line-height: 2.375rem;
-                    }
+                > .details-table-section > services-details-table {
+                    > services-details-table-row {
+                        > [slot="content"] > p {
+                            height: 100%;
+                        }
+                        
+                        &[selected] {
+                            &::part(button-container) {
+                                color: var(--service-details-table-row-selected-color);
+                                background-color: var(--service-details-table-row-selected-background-color);
+                            }
 
-                    > details > summary {
-                        cursor: pointer;
-                        font-weight: 700;
-                        user-select: none;
-                    }
-
-                    p {
-                        font-size: 1.125rem;
-                        font-weight: 400;
-                        line-height: 2.125rem;
+                            &::part(icon-path) {
+                                fill: var(--service-details-table-row-selected-color);
+                            }
+                        }
                     }
                 }
             }
-
-            > .details-table-section > services-details-table {
-                [slot="content"] > p {
-                    font-size: 1.125rem;
-                    font-weight: 400;
-                    line-height: 2.125rem;
-                    height: 100%;
-                }
-            }
-        }
-
-        &.dark-theme services-details-table-row[selected] {
-            &::part(button-container) {
-                color: var(--altshift-orange);
-                background-color: var(--altshift-main-color)
-            }
-
-            &::part(icon-path) {
-                fill: var(--altshift-orange);
-            }
-        }
-    `;
+        `
+    ] as CSSResultGroup;
 
     render() {
         return html`

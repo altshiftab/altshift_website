@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
+	"maps"
+	"net/http"
 
 	motmedelEnv "github.com/Motmedel/utils_go/pkg/env"
 	motmedelErrors "github.com/Motmedel/utils_go/pkg/errors"
@@ -15,7 +17,7 @@ func main() {
 	logger := altshiftGcpUtilsLog.DefaultFatal(context.Background())
 	slog.SetDefault(logger.Logger)
 
-	httpServer, _, err := altshiftGcpUtilsHttp.MakePublicHttpService(
+	httpServer, mux, err := altshiftGcpUtilsHttp.MakePublicHttpService(
 		"www.altshift.se",
 		motmedelEnv.GetEnvWithDefault("PORT", "8080"),
 		staticContentEndpointSpecifications,
@@ -23,6 +25,31 @@ func main() {
 	)
 	if err != nil {
 		logger.FatalWithExitingMessage("An error occurred when making the mux.", fmt.Errorf("make mux: %w", err))
+	}
+
+	if err := altshiftGcpUtilsHttp.PatchTrustedTypes(mux, litHtmlTrustedTypesPolicy, webpackTrustedTypesPolicy); err != nil {
+		logger.FatalWithExitingMessage(
+			"An error occurred when patching trusted types.",
+			motmedelErrors.NewWithTrace(
+				fmt.Errorf("patch trusted types: %w", err),
+				mux, litHtmlTrustedTypesPolicy, webpackTrustedTypesPolicy,
+			),
+		)
+	}
+
+	indexEndpointSpecification := mux.Get("/", http.MethodGet)
+	if indexEndpointSpecification == nil {
+		logger.FatalWithExitingMessage(
+			"The index endpoint specification is nil.",
+			nil,
+		)
+	}
+
+	for route := range maps.Values(routes) {
+		specification := *indexEndpointSpecification
+		specification.Path = route
+
+		mux.Add(&specification)
 	}
 
 	if err := httpServer.ListenAndServe(); err != nil {
