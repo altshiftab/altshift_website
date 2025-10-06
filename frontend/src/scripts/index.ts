@@ -183,8 +183,7 @@ async function renderSpa(path = location.pathname) {
     const mod = await importPage(name);
     render(new mod.default(), main);
 
-    // NOTE: iOS WebKit can fail to paint after the initial JavaScript-driven render until a viewport change. Trigger one.
-    await forceInitialPaint(main);
+    document.body.classList.remove("loading");
 }
 
 addEventListener("click", (event: MouseEvent) => {
@@ -277,13 +276,6 @@ addEventListener("DOMContentLoaded", () => {
     )
 
     renderSpa();
-});
-
-// When restoring from bfcache (common on iOS), ensure content is (re)rendered.
-addEventListener("pageshow", (event) => {
-    if ((event as PageTransitionEvent).persisted) {
-        renderSpa();
-    }
 });
 
 addEventListener(toggledSwitchEventType, event => {

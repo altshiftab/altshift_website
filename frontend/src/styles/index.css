@@ -32,7 +32,7 @@ html {
     > body {
         gap: 5rem;
 
-        &:has(> main:empty) {
+        &.loading {
             display: none;
         }
 
