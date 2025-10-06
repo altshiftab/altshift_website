@@ -29,6 +29,12 @@ document.documentElement.classList.remove(classToRemove);
 const routeNames = Object.keys(config.routes);
 const routePaths = ["/", ...Object.values(config.routes)];
 
+async function forceInitialPaint(container: HTMLElement): Promise<void> {
+    // Yield to the next frame and force a layout read to trigger paint on iOS WebKit
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    void container.getBoundingClientRect();
+}
+
 @customElement("altshift-footer-www")
 class AltShiftFooterWww extends LitElement {
     static styles = css`
@@ -146,7 +152,7 @@ class AltShiftHeaderWww extends LitElement {
 }
 
 async function importPage(name: string) {
-    // TODO: What do I need to do to make this work?
+    // TODO: Inspect the Webpack code responsible for this?
     // IMPORTANT: keep a static prefix ("./pages/") so webpack builds a context
     return import(
         /* webpackMode: "lazy", webpackChunkName: "page-[request]" */
@@ -176,6 +182,9 @@ async function renderSpa(path = location.pathname) {
 
     const mod = await importPage(name);
     render(new mod.default(), main);
+
+    // NOTE: iOS WebKit can fail to paint after the initial JavaScript-driven render until a viewport change. Trigger one.
+    await forceInitialPaint(main);
 }
 
 addEventListener("click", (event: MouseEvent) => {
@@ -268,6 +277,13 @@ addEventListener("DOMContentLoaded", () => {
     )
 
     renderSpa();
+});
+
+// When restoring from bfcache (common on iOS), ensure content is (re)rendered.
+addEventListener("pageshow", (event) => {
+    if ((event as PageTransitionEvent).persisted) {
+        renderSpa();
+    }
 });
 
 addEventListener(toggledSwitchEventType, event => {
