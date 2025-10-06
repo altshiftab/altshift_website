@@ -155,7 +155,7 @@ async function importPage(name: string) {
 }
 
 async function renderSpa(path = location.pathname) {
-    const main = document.querySelector<HTMLElement>("main");
+    const main = document.querySelector("main");
     if (!(main instanceof HTMLElement))
         throw new Error("no main element found");
 
