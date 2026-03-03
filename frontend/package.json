@@ -9,11 +9,11 @@
     "dependencies": {
         "@altshiftab/web_components": "^0.0.70",
         "@altshiftab/styles": "^0.0.12",
-        "@altshiftab/http_service_utils_js": "^0.0.5",
-        "lit": "^3.3.1"
+        "@altshiftab/http_service_utils_js": "^0.0.8",
+        "lit": "^3.3.2"
     },
     "devDependencies": {
-        "@altshiftab/webpack_configuration": "^0.0.31",
+        "@altshiftab/webpack_configuration": "^0.0.35",
         "webpack-cli": "^6.0.1"
     }
 }

@@ -1,40 +1,26 @@
-module github.com/altshiftab/altshift_website_service
+module github.com/altshiftab/altshift_website
 
-go 1.25
+go 1.26
 
 require (
-	github.com/Motmedel/utils_go v0.0.276
-	github.com/Motmedel/utils_go/pkg/http/mux v0.0.98
-	github.com/altshiftab/gcp_utils/pkg/http v0.0.28
-	github.com/altshiftab/gcp_utils/pkg/log v0.0.11
+	github.com/Motmedel/utils_go v0.0.396
+	github.com/Motmedel/utils_go/pkg/http/mux v0.0.180
+	github.com/altshiftab/gcp_utils v0.0.15
+	github.com/altshiftab/gcp_utils/pkg/http v0.0.47
 )
 
 require (
-	github.com/Motmedel/dns_utils v0.0.45 // indirect
-	github.com/Motmedel/dns_utils/pkg/log v0.0.10 // indirect
-	github.com/Motmedel/ecs_go v0.0.64 // indirect
-	github.com/Motmedel/gcp_logging_go v0.0.7 // indirect
-	github.com/Motmedel/parsing_utils v0.0.4 // indirect
-	github.com/Motmedel/utils_go/pkg/http/log v0.0.6 // indirect
-	github.com/Motmedel/utils_go/pkg/http/parsing/headers v0.0.29 // indirect
-	github.com/Motmedel/utils_go/pkg/http/problem_detail v1.0.5 // indirect
-	github.com/Motmedel/utils_go/pkg/net/domain_breakdown v0.0.5 // indirect
-	github.com/altshiftab/gcp_utils v0.0.7 // indirect
-	github.com/altshiftab/mux_static_content/cmd/generate_endpoints v0.0.3 // indirect
-	github.com/gammazero/deque v1.1.0 // indirect
-	github.com/google/uuid v1.6.0 // indirect
+	github.com/Motmedel/parsing_utils v0.0.5 // indirect
+	github.com/Motmedel/utils_go/pkg/http/parsing/headers v0.0.36 // indirect
+	github.com/altshiftab/mux_static_content/cmd/generate_endpoints v0.0.12 // indirect
+	github.com/gammazero/deque v1.2.1 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
-	github.com/miekg/dns v1.1.66 // indirect
-	github.com/pandatix/go-abnf v0.3.0 // indirect
+	github.com/pandatix/go-abnf v0.4.1 // indirect
 	github.com/vphpersson/code_generation v0.0.9 // indirect
 	github.com/vphpersson/code_generation/cmd/translate_json_object v0.0.3 // indirect
-	github.com/vphpersson/code_generation_go v0.0.8 // indirect
-	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.44.0 // indirect
-	golang.org/x/sync v0.17.0 // indirect
-	golang.org/x/sys v0.36.0 // indirect
-	golang.org/x/text v0.29.0 // indirect
-	golang.org/x/tools v0.36.0 // indirect
+	golang.org/x/net v0.51.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
 )
 
 tool (

@@ -1,30 +1,65 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"log/slog"
 	"maps"
 	"net/http"
+	"net/url"
 
 	motmedelEnv "github.com/Motmedel/utils_go/pkg/env"
 	motmedelErrors "github.com/Motmedel/utils_go/pkg/errors"
+	"github.com/Motmedel/utils_go/pkg/net/types/domain_parts"
 	altshiftGcpUtilsHttp "github.com/altshiftab/gcp_utils/pkg/http"
-	altshiftGcpUtilsLog "github.com/altshiftab/gcp_utils/pkg/log"
+	"github.com/altshiftab/gcp_utils/pkg/http/types/service"
+	"github.com/altshiftab/gcp_utils/pkg/http/types/service/service_config"
+	gcpUtilsLogger "github.com/altshiftab/gcp_utils/pkg/types/logger"
 )
 
 func main() {
-	logger := altshiftGcpUtilsLog.DefaultFatal(context.Background())
+	logger := gcpUtilsLogger.New()
 	slog.SetDefault(logger.Logger)
 
-	httpServer, mux, err := altshiftGcpUtilsHttp.MakePublicHttpService(
-		"www.altshift.se",
-		motmedelEnv.GetEnvWithDefault("PORT", "8080"),
-		staticContentEndpointSpecifications,
-		[2]string{"altshift.se", "https://www.altshift.se"},
-	)
+	domain := motmedelEnv.GetEnvWithDefault("DOMAIN", "localhost")
+	port := motmedelEnv.GetEnvWithDefault("PORT", "8080")
+
+	serviceOptions := []service_config.Option{service_config.WithStaticContentEndpoints(staticContentEndpoints)}
+
+	if domain != "localhost" {
+		domainParts := domain_parts.New(domain)
+		if domainParts == nil {
+			logger.FatalWithExitingMessage("Domain parts is nil", nil)
+		}
+
+		registeredDomain := domainParts.RegisteredDomain
+		if registeredDomain == "" {
+			logger.FatalWithExitingMessage("Empty registered domain", nil)
+		}
+
+		serviceOptions = append(
+			serviceOptions,
+			service_config.WithRedirects(
+				[][2]string{
+					{
+						registeredDomain,
+						new(url.URL{Scheme: "https", Host: domain}).String(),
+					},
+				},
+			),
+		)
+	}
+
+	httpService, err := service.New(domain, port, serviceOptions...)
 	if err != nil {
-		logger.FatalWithExitingMessage("An error occurred when making the mux.", fmt.Errorf("make mux: %w", err))
+		logger.FatalWithExitingMessage("An error occurred when creating the http service.", err)
+	}
+	if httpService == nil {
+		logger.FatalWithExitingMessage("Nil http service.", nil)
+	}
+
+	mux := httpService.Mux
+	if mux == nil {
+		logger.FatalWithExitingMessage("Nil mux", nil)
 	}
 
 	if err := altshiftGcpUtilsHttp.PatchTrustedTypes(mux, litHtmlTrustedTypesPolicy, webpackTrustedTypesPolicy); err != nil {
@@ -50,6 +85,11 @@ func main() {
 		specification.Path = route
 
 		mux.Add(&specification)
+	}
+
+	httpServer := httpService.Server
+	if httpServer == nil {
+		logger.FatalWithExitingMessage("Nil http server.", nil)
 	}
 
 	if err := httpServer.ListenAndServe(); err != nil {

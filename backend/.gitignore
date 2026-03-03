@@ -11,6 +11,6 @@
 
 !/config.go
 !/service.go
-!/static_content_endpoint_specifications.go
+!/static_content_endpoints.go
 !/pkg/**/*
 !/internal/**/*
