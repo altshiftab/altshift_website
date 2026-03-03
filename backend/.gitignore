@@ -6,11 +6,6 @@
 !/go.mod
 !/go.sum
 
-!/pkg/
-!/internal/
-
 !/config.go
 !/service.go
 !/static_content_endpoints.go
-!/pkg/**/*
-!/internal/**/*

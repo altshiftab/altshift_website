@@ -2,7 +2,15 @@
 
 .PHONY: all update frontend-update backend-update build frontend-build backend-build publish backend-publish backend-publish-build backend-deploy
 
-all: update build
+backend-build:
+	@echo "[backend] Building..."
+	cd backend && go generate && GOOS=linux go build -a -ldflags="-s -w -buildid=" -installsuffix cgo -o ../service
+
+frontend-build:
+	@echo "[frontend] Building..."
+	cd frontend && npm run build
+
+build: frontend-build backend-build
 
 backend-update:
 	@echo "[backend] Updating..."
@@ -14,15 +22,7 @@ frontend-update:
 
 update: frontend-update backend-update
 
-backend-build:
-	@echo "[backend] Building..."
-	cd backend && go generate && GOOS=linux go build -a -ldflags="-s -w -buildid=" -installsuffix cgo -o ../service
-
-frontend-build:
-	@echo "[frontend] Building..."
-	cd frontend && npm run build
-
-build: frontend-build backend-build
+all: update build
 
 backend-publish-build:
 	@echo "[backend] Building for publish..."
