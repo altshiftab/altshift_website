@@ -25,6 +25,7 @@ func main() {
 		domain,
 		port,
 		service_config.WithStaticContentEndpoints(staticContentEndpoints),
+		service_config.WithPublic(true),
 	)
 	if err != nil {
 		logger.FatalWithExitingMessage("An error occurred when creating the http service.", err)

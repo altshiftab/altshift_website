@@ -10,8 +10,8 @@ github.com/Motmedel/utils_go/pkg/http/parsing/headers v0.0.41 h1:oBuVYm3PoQS/XwS
 github.com/Motmedel/utils_go/pkg/http/parsing/headers v0.0.41/go.mod h1:xxxFb1P1t1gv1ySRP755FTSSvkLg7l1/dgecJcOd1Qg=
 github.com/altshiftab/gcp_utils v0.0.22 h1:UYZzgxnXkAlA29hIMVsVpFxPdONFkjE3ae7tHlvrlIA=
 github.com/altshiftab/gcp_utils v0.0.22/go.mod h1:+wZysf3rk//f2wD4q1wbYMoTzjsBhzVhuiai+B08VgA=
-github.com/altshiftab/gcp_utils/pkg/http v0.0.64 h1:WjYuyXQLDof5Jy8Z2O88MF/m2mP5o2PLs6mPI+wvIIQ=
-github.com/altshiftab/gcp_utils/pkg/http v0.0.64/go.mod h1:I9RKvGQBO4MJpYJVmHdDGtH702AaiIVh12xmHlQh9Ms=
+github.com/altshiftab/gcp_utils/pkg/http v0.0.65 h1:q+msoCGxy5ux3AUe0Icc13B+lBRVy/qkFYgfFxlQGbo=
+github.com/altshiftab/gcp_utils/pkg/http v0.0.65/go.mod h1:KmDBIvYj/YzGsOqJWDcR9caljyrYQl/B9JBR1fKYXmc=
 github.com/altshiftab/jsonschema v0.0.15 h1:19JhSF2SpAuJBEl+lhL5RN06Us5vbi1OlPkAUvGvJqU=
 github.com/altshiftab/jsonschema v0.0.15/go.mod h1:iqYu4Yj2ZpzqOJ29pHMUQoP/NiT58IXV03y2TfZ2YKc=
 github.com/altshiftab/mux_static_content/cmd/generate_endpoints v0.0.12 h1:JOC5kbIFKE22+k4Y+EvOlYkvGwm9ccCtS2EqZAXkTQc=

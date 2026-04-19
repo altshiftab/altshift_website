@@ -6,7 +6,7 @@ require (
 	github.com/Motmedel/utils_go v0.0.466
 	github.com/Motmedel/utils_go/pkg/http/mux v0.0.185
 	github.com/altshiftab/gcp_utils v0.0.22
-	github.com/altshiftab/gcp_utils/pkg/http v0.0.64
+	github.com/altshiftab/gcp_utils/pkg/http v0.0.65
 )
 
 require (
