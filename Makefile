@@ -4,7 +4,7 @@
 
 backend-build:
 	@echo "[backend] Building..."
-	cd backend && go generate && GOOS=linux go build -a -ldflags="-s -w -buildid=" -installsuffix cgo -o ../service
+	cd backend && GOEXPERIMENT=jsonv2 go generate && GOOS=linux GOEXPERIMENT=jsonv2 go build -a -ldflags="-s -w -buildid=" -installsuffix cgo -o ../service
 
 frontend-build:
 	@echo "[frontend] Building..."

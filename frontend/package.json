@@ -7,13 +7,13 @@
         "build": "webpack --config webpack.config.mjs --stats-children"
     },
     "dependencies": {
-        "@altshiftab/web_components": "^0.0.70",
-        "@altshiftab/styles": "^0.0.12",
-        "@altshiftab/http_service_utils_js": "^0.0.8",
+        "@altshiftab/web_components": "^0.0.72",
+        "@altshiftab/styles": "^0.0.13",
+        "@altshiftab/http_service_utils_js": "^0.0.9",
         "lit": "^3.3.2"
     },
     "devDependencies": {
-        "@altshiftab/webpack_configuration": "^0.0.35",
-        "webpack-cli": "^6.0.1"
+        "@altshiftab/webpack_configuration": "^0.0.36",
+        "webpack-cli": "^7.0.2"
     }
 }

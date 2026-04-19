@@ -5,11 +5,9 @@ import (
 	"log/slog"
 	"maps"
 	"net/http"
-	"net/url"
 
 	motmedelEnv "github.com/Motmedel/utils_go/pkg/env"
 	motmedelErrors "github.com/Motmedel/utils_go/pkg/errors"
-	"github.com/Motmedel/utils_go/pkg/net/types/domain_parts"
 	altshiftGcpUtilsHttp "github.com/altshiftab/gcp_utils/pkg/http"
 	"github.com/altshiftab/gcp_utils/pkg/http/types/service"
 	"github.com/altshiftab/gcp_utils/pkg/http/types/service/service_config"
@@ -23,33 +21,11 @@ func main() {
 	domain := motmedelEnv.GetEnvWithDefault("DOMAIN", "localhost")
 	port := motmedelEnv.GetEnvWithDefault("PORT", "8080")
 
-	serviceOptions := []service_config.Option{service_config.WithStaticContentEndpoints(staticContentEndpoints)}
-
-	if domain != "localhost" {
-		domainParts := domain_parts.New(domain)
-		if domainParts == nil {
-			logger.FatalWithExitingMessage("Domain parts is nil", nil)
-		}
-
-		registeredDomain := domainParts.RegisteredDomain
-		if registeredDomain == "" {
-			logger.FatalWithExitingMessage("Empty registered domain", nil)
-		}
-
-		serviceOptions = append(
-			serviceOptions,
-			service_config.WithRedirects(
-				[][2]string{
-					{
-						registeredDomain,
-						new(url.URL{Scheme: "https", Host: domain}).String(),
-					},
-				},
-			),
-		)
-	}
-
-	httpService, err := service.New(domain, port, serviceOptions...)
+	httpService, err := service.New(
+		domain,
+		port,
+		service_config.WithStaticContentEndpoints(staticContentEndpoints),
+	)
 	if err != nil {
 		logger.FatalWithExitingMessage("An error occurred when creating the http service.", err)
 	}
