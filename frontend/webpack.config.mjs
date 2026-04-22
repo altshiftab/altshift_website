@@ -1,3 +1,6 @@
-import {makeConfig} from "@altshiftab/webpack_configuration"
+import {makeConfigWithParameters, generateParameters} from "@altshiftab/webpack_configuration"
 
-export default makeConfig();
+export default makeConfigWithParameters({
+    ...generateParameters(),
+    preloadFonts: /^fonts\/mulish-.*\.woff2$/,
+});

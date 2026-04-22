@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "rootDir": "./src/scripts",
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
         "esModuleInterop": true,
